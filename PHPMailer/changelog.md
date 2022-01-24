@@ -1,11 +1,56 @@
 # PHPMailer Change Log
 
-## WIP
+## Version 6.5.1 (August 18th, 2021)
+* Provisional support for PHP 8.1
+* Major overhaul of test suite
+* Add codecov.io coverage reporting
+* Prefer implicit TLS on port 465 as default encryption scheme in examples, as per RFC8314
+* Fix potential noisy output from IMAP address parser
+* Stricter checking of custom MessageID validity
+* Replace invalid default From address
+* Support fallback for languages, so a request for `pt_xx` will fall back to `pt` rather than the default `en`.
+* Support multi-line RFC2047 addresses in parseAddresses
+* Improved Japanese translation
+
+Many thanks to @jrfnl for all her work.
+
+## Version 6.5.0 (June 16th, 2021)
+* **SECURITY** Fixes CVE-2021-34551, a complex RCE affecting Windows hosts. See [SECURITY.md](SECURITY.md) for details.
+* The fix for this issue changes the way that language files are loaded. While they remain in the same PHP-like format, they are processed as plain text, and any code in them will not be run, including operations such as concatenation using the `.` operator.
+* *Deprecation* The current translation file format using PHP arrays is now deprecated; the next major version will introduce a new format.
+* **SECURITY** Fixes CVE-2021-3603 that may permit untrusted code to be run from an address validator. See [SECURITY.md](SECURITY.md) for details.
+* The fix for this issue includes a minor BC break: callables injected into `validateAddress`, or indirectly through the `$validator` class property, may no longer be simple strings. If you want to inject your own validator, provide a closure instead of a function name.
+* Haraka message ID strings are now recognised
+
+## Version 6.4.1 (April 29th, 2021)
+* **SECURITY** Fixes CVE-2020-36326, a regression of CVE-2018-19296 object injection introduced in 6.1.8, see SECURITY.md for details
+* Reject more file paths that look like URLs, matching RFC3986 spec, blocking URLS using schemes such as `ssh2`
+* Ensure method signature consistency in `doCallback` calls
+* Ukrainian language update
+* Add composer scripts for checking coding standards and running tests
+
+## Version 6.4.0 (March 31st, 2021)
+* Revert change that made the `mail()` and sendmail transports set the envelope sender if one isn't explicitly provided, as it causes problems described in <https://github.com/PHPMailer/PHPMailer/issues/2298>
+* Check for mbstring extension before decoding addresss in `parseAddress`
+* Add Serbian Latin translation (`sr_latn`)
+* Enrol PHPMailer in Tidelift
+
+## Version 6.3.0 (February 19th, 2021)
+* Handle early connection errors such as 421 during connection and EHLO states
+* Switch to Github Actions for CI
+* Generate debug output for `mail()`, sendmail, and qmail transports. Enable using the same mechanism as for SMTP: set `SMTPDebug` > 0
+* Make the `mail()` and sendmail transports set the envelope sender the same way as SMTP does, i.e. use whatever `From` is set to, only falling back to the `sendmail_from` php.ini setting if `From` is unset. This avoids errors from the `mail()` function if `Sender` is not set explicitly and php.ini is not configured. This is a minor functionality change, so bumps the minor version number.
+* Extend `parseAddresses` to decode encoded names, improve tests
+
+## Version 6.2.0
+* PHP 8.0 compatibility, many thanks to @jrf_nl!
 * Switch from PHP CS Fixer to PHP CodeSniffer for coding standards
 * Create class constants for the debug levels in the POP3 class
 * Improve French, Slovenian, and Ukrainian translations
-* Improve file upload examples
+* Improve file upload examples so file extensions are retained
 * Resolve PHP 8 line break issues due to a very old PHP bug being fixed
+* Avoid warnings when using old openssl functions
+* Improve Travis-CI build configuration
 
 ## Version 6.1.8 (October 9th, 2020)
 * Mark `ext-hash` as required in composer.json. This has long been required, but now it will cause an error at install time rather than runtime, making it easier to diagnose
