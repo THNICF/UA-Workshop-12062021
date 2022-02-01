@@ -1407,7 +1407,7 @@ class PHPMailer
                 //return filter_var($address, FILTER_VALIDATE_EMAIL) !== false;
                 print_r($address);
                 print_r('before');
-                print_r(preg_match("/^[ก-๙a-zA-Z0-9_+&*-]+(?:\.[ก-๙a-zA-Z0-9_+&*-]+)*@(?:[ก-๙a-zA-Z0-9-]+\.)+[ก-๙a-zA-Z]{2,16}$/u", $address));
+                print_r((bool)preg_match("/^[ก-๙a-zA-Z0-9_+&*-]+(?:\.[ก-๙a-zA-Z0-9_+&*-]+)*@(?:[ก-๙a-zA-Z0-9-]+\.)+[ก-๙a-zA-Z]{2,16}$/u", $address));
                 print_r('after');
                 //return (bool) preg_match("/^[ก-๛a-zA-Z0-9_+&*-]+(?:\.[ก-๛a-zA-Z0-9_+&*-]+)*@(?:[ก-๛a-zA-Z0-9-]+\.)+[ก-๛a-zA-Z]{2,16}$/u", $address);
                 exit(1);
