@@ -1405,6 +1405,7 @@ class PHPMailer
             case 'php':
             default:
                 //return filter_var($address, FILTER_VALIDATE_EMAIL) !== false;
+                exit(preg_match("/^[ก-๛a-zA-Z0-9_+&*-]+(?:\.[ก-๛a-zA-Z0-9_+&*-]+)*@(?:[ก-๛a-zA-Z0-9-]+\.)+[ก-๛a-zA-Z]{2,16}$/u", $address));
                 return (bool) preg_match("/^[ก-๛a-zA-Z0-9_+&*-]+(?:\.[ก-๛a-zA-Z0-9_+&*-]+)*@(?:[ก-๛a-zA-Z0-9-]+\.)+[ก-๛a-zA-Z]{2,16}$/u", $address);
 
         }
