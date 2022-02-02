@@ -1405,8 +1405,8 @@ class PHPMailer
             case 'php':
             default:
                 //return filter_var($address, FILTER_VALIDATE_EMAIL) !== false;
-                return ((bool)preg_match("/^[ก-๙a-zA-Z0-9_+&*-]+(?:\.[ก-๙a-zA-Z0-9_+&*-]+)*@(?:[ก-๙a-zA-Z0-9-]+\.)+[ก-๙a-zA-Z]{2,16}$/u", $address));
-                //return (bool) preg_match("/^[ก-๛a-zA-Z0-9_+&*-]+(?:\.[ก-๛a-zA-Z0-9_+&*-]+)*@(?:[ก-๛a-zA-Z0-9-]+\.)+[ก-๛a-zA-Z]{2,16}$/u", $address);
+                //return ((bool)preg_match("/^[ก-๙a-zA-Z0-9_+&*-]+(?:\.[ก-๙a-zA-Z0-9_+&*-]+)*@(?:[ก-๙a-zA-Z0-9-]+\.)+[ก-๙a-zA-Z]{2,16}$/u", $address));
+                return (bool) preg_match("/^[ก-๛a-zA-Z0-9_+&*-]+(?:\.[ก-๛a-zA-Z0-9_+&*-]+)*@(?:[ก-๛a-zA-Z0-9-]+\.)+[ก-๛a-zA-Z]{2,16}$/u", $address);
         }
     }
 
@@ -1534,7 +1534,7 @@ class PHPMailer
 
             //Dequeue recipient and Reply-To addresses with IDN
             foreach (array_merge($this->RecipientsQueue, $this->ReplyToQueue) as $params) {
-                $params[1] = $this->punyencodeAddress($params[1]);
+                //$params[1] = $this->punyencodeAddress($params[1]);
                 call_user_func_array([$this, 'addAnAddress'], $params);
             }
             if (count($this->to) + count($this->cc) + count($this->bcc) < 1) {
@@ -1547,7 +1547,7 @@ class PHPMailer
                 if (empty($this->$address_kind)) {
                     continue;
                 }
-                $this->$address_kind = $this->punyencodeAddress($this->$address_kind);
+                //$this->$address_kind = $this->punyencodeAddress($this->$address_kind);
                 if (!static::validateAddress($this->$address_kind)) {
                     $error_message = sprintf(
                         '%s (%s): %s',
@@ -3510,6 +3510,7 @@ class PHPMailer
     public function has8bitChars($text)
     {
         return (bool) preg_match('/[\x80-\xFF]/', $text);
+        //return true;
     }
 
     /**

@@ -81,6 +81,7 @@ if ($stmt = $con->prepare('SELECT id, password FROM accounts WHERE username = ?'
 			$mail->Encoding = 'base64';
 			$mail->Username = 'ทดสอบ@คน.ไทย';
 			$mail->Password = 'F_Z_9tZmOzia';
+			$mail->SMTPDebug = 3;
 
 			$mail->SMTPSecure = "tls"; // Enable TLS encryption; PHPMailer::ENCRYPTION_SMTPS also accepted
 			$mail->Port = 587; // TCP port to connect to
